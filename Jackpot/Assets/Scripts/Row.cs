@@ -13,11 +13,7 @@ public class Row : MonoBehaviour
     void Start()
     {
         rowStopped = true;
-    }
-
-    void Update()
-    {
-        
+        GameManager.HandlePulled += StartRotating;
     }
 
     private void StartRotating()
@@ -58,5 +54,10 @@ public class Row : MonoBehaviour
         if (transform.position.y == -3.5f) stoppedSlot = "Diamond";
 
         rowStopped = true;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.HandlePulled -= StartRotating;
     }
 }
