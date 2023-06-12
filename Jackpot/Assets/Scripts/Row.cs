@@ -28,6 +28,21 @@ public class Row : MonoBehaviour
         timeInterval = 0.025f;
         randomValue = Random.Range(60, 100);
 
+        switch (randomValue % 3)
+        {
+            case 1:
+                randomValue += 2;
+                break;
+
+            case 2:
+                randomValue += 1;
+                break;
+
+            case 3:
+                randomValue += 2;
+                break;
+        }
+
         for (int i = 0; i < randomValue; i++)
         {
             if(transform.position.y <= -3.5f)

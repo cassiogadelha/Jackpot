@@ -8,8 +8,12 @@ public class GameManager : MonoBehaviour
 {
     public static event Action HandlePulled = delegate { };
 
+    private AudioSource audioPlayer;
+    //public AudioClip musicOne;
+    //public AudioClip musicTwo;
+
     [SerializeField]
-    private Text prizeText;
+    private TMPro.TextMeshProUGUI prizeText;
 
     [SerializeField]
     private Row[] rows;
@@ -19,11 +23,13 @@ public class GameManager : MonoBehaviour
 
     private int prizeValue;
 
-    private bool resultsChecked = false;
+    private bool resultsChecked;
 
     void Start()
     {
-        
+        resultsChecked = false;
+        audioPlayer = GetComponent<AudioSource>();
+        //musicTwo = Resources.Load<AudioClip>("Alavanca");
     }
 
     void Update()
@@ -47,18 +53,20 @@ public class GameManager : MonoBehaviour
     {
         if(rows[0].rowStopped && rows[1].rowStopped && rows[2].rowStopped)
         {
-
+            StartCoroutine("PullHandle");
         }
     }
 
     private IEnumerator PullHandle()
     {
-        for(int i = 0; i < 15; i+=5)
+        for(int i = 0; i < 15; i += 5)
         {
             handle.Rotate(0f, 0f, i);
             yield return new WaitForSeconds(0.01f);
         }
 
+        audioPlayer.Play();
+        //audioPlayer.PlayOneShot(musicTwo);
         HandlePulled();
 
         for (int i = 0; i < 15; i += 5)
